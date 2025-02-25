@@ -1,3 +1,7 @@
 pandas
 torch
-whisper
+torchaudio
+transformers
+openai-whisper
+typer
+black
