@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "discrimads"
+version = "0.1.0"
+description = "Discrimination dans les publicités d'emploi"
+authors = [
+    { name = "Tom Seimandi", email = "tom.seimandi@gmail.com" }
+]
+dependencies = [
+    "pandas",  # Add your dependencies here
+    "torch"
+]
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.8"
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "black",
+    "flake8"
+]
+
+[tool.setuptools]
+packages = ["discrimads"]
+package-dir = {"" = "src"}
+
+[tool.black]
+line-length = 88
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+adopts = "--strict-markers"
+
+testpaths = [
+    "tests",
+]
