@@ -13,9 +13,11 @@ class Transcriber(ABC):
 
 
 class WhisperTranscriber(Transcriber):
-    whisper_model_type: str = "large"
+    whisper_model_type: str = "turbo"
 
     def __init__(self, device: str | None):
+        if device is None:
+            device = "cpu"
         self.model = whisper.load_model(self.whisper_model_type, device=device)
 
     def transcribe(self, path: Path | str) -> str:
