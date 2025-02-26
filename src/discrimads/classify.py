@@ -3,10 +3,8 @@ from inaFaceAnalyzer.inaFaceAnalyzer import ImageAnalyzer
 from pathlib import Path
 
 
-inaFaceAnalyzer = ImageAnalyzer()
-
-
-def predict_gender(frames_dir: Path):
+def predict_gender(frames_dir: Path) -> int:
+    inaFaceAnalyzer = ImageAnalyzer()
     paths = os.listdir(frames_dir)
     frame_list = filter(lambda x: x.endswith(".jpg"), paths)
     frame_list = list(map(lambda x: frames_dir / x, frame_list))
@@ -33,5 +31,5 @@ def predict_gender(frames_dir: Path):
         if frame_name not in df['frame'].tolist():
             ret.append(2)
 
-    print(ret)
+    del inaFaceAnalyzer
     return ret

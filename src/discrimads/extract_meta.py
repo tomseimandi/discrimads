@@ -3,9 +3,9 @@ Extract infos from tiktok videos.
 """
 
 import pandas as pd
+from pathlib import Path
 import os
 import torch
-from discrimads.download import download_video
 from discrimads.extract_audio import extract_audio
 from discrimads.gender_audio import get_gender_for_audio
 from discrimads.transcription import WhisperTranscriber
@@ -16,14 +16,11 @@ from discrimads.ocr import get_text
 from tqdm import tqdm
 
 
-def extract_content_from_urls(urls: list[str]) -> pd.DataFrame:
+def extract_content(paths: list[str]) -> pd.DataFrame:
     contents = []
-    for i, url in tqdm(enumerate(urls)):
-        video_path = f"tmp/video_{i}.mp4"
-        audio_path = f"tmp/audio_{i}.mp3"
+    for i, video_path in tqdm(enumerate(paths)):
+        audio_path = str(video_path).replace("mp4", "mp3")
 
-        if not os.path.exists(video_path):
-            download_video(url=url, video_path=video_path)
         if not os.path.exists(audio_path):
             extract_audio(video_path, audio_path, duration=20)
         print(f"Video and audio {i} extracted.")
@@ -49,7 +46,7 @@ def extract_content_from_urls(urls: list[str]) -> pd.DataFrame:
         # frames_gender = predict_gender(frames_dir)
 
         content = VideoContent(
-            url=url,
+            url=str(video_path),
             audio_text=audio_text,
             audio_gender=gender,
             audio_jobs=[],  # TODO: implement
@@ -59,15 +56,15 @@ def extract_content_from_urls(urls: list[str]) -> pd.DataFrame:
         contents.append(content)
 
     df = pd.DataFrame.from_records([content.model_dump() for content in contents])
-    df.to_parquet("data/sample_content.parquet")
+    df.to_parquet("data/meta_content.parquet")
     return df
 
 
 if __name__ == "__main__":
-    # load tiktok data
-    df = pd.read_parquet("data/tiktok_sample.parquet")
-    # get urls
-    urls = [video_list[0]["url"] for video_list in df.videos]
+    # get paths
+    paths = os.listdir("ads")
+    paths = filter(lambda x: x.endswith(".mp4"), paths)
+    paths = list(map(lambda x: Path("ads") / x, paths))
 
     # extract content
-    extract_content_from_urls(urls=urls)
+    extract_content(paths=paths)
