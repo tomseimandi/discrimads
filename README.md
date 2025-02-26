@@ -3,9 +3,11 @@
 ## Installation
 
 ```
-sudo apt update && sudo apt install ffmpeg
+sudo apt update && sudo apt install ffmpeg cmake
 pip install -r requirements.txt
 pip install --user --no-deps -e .
+export KEY=<tiktok-api-key>
+export SECRET=<tiktok-secret-key>
 ```
 
 ## Tâches

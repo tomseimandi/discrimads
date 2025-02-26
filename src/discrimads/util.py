@@ -18,6 +18,8 @@ class VideoContent:
     audio_text: str
     audio_gender: AudioGender
     audio_jobs: list[str]
+    ocr_text: str
+    frames_gender: int
 
 
 def flatten_ad_dict(ad_dict: dict):

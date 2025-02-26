@@ -6,3 +6,8 @@ openai-whisper
 typer
 black
 pydantic
+scikit-image
+pytesseract
+opencv-python
+pillow
+inaFaceAnalyzer

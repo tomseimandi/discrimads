@@ -50,11 +50,11 @@ class TiktokBaseParams(BaseModel):
     )
 
 
-class TiktokAdvertiserAdsParams(BaseModel):
+class TiktokAdvertiserAdsParams(TiktokBaseParams):
     pass
 
 
-class TiktokSearchAdsParams(BaseModel):
+class TiktokSearchAdsParams(TiktokBaseParams):
     pass
 
 
@@ -75,7 +75,7 @@ class TiktokAdsTransparencyClient():
         "Content-Type": "application/x-www-form-urlencoded",
         "Cache-Control": "no-cache",
     }
-    DETAILS_METHOD_THRESHOLD = 20
+    DETAILS_METHOD_THRESHOLD = 101
 
     def __init__(self, **kwargs) -> None:
         self._initialize_credentials(**kwargs)
