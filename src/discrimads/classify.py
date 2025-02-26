@@ -4,7 +4,6 @@ from pathlib import Path
 
 
 inaFaceAnalyzer = ImageAnalyzer()
-video_location = "test_videos/"
 
 
 def predict_gender(frames_dir: Path):
@@ -13,7 +12,7 @@ def predict_gender(frames_dir: Path):
     frame_list = list(map(lambda x: frames_dir / x, frame_list))
 
     # classify frames
-    df = inaFaceAnalyzer(frame_list)
+    df = inaFaceAnalyzer([str(p) for p in frame_list])
     df_2 = df.groupby("frame")['sex_label'].apply(list)
     ret = []
     for row in df_2:

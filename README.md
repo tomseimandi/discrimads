@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-sudo apt update && sudo apt install ffmpeg cmake
+sudo apt update && sudo apt install ffmpeg cmake tesseract-ocr tesseract-ocr-fra
 pip install -r requirements.txt
 pip install --user --no-deps -e .
 export KEY=<tiktok-api-key>

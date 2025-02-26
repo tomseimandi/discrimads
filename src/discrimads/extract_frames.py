@@ -15,7 +15,9 @@ def extract_frames(video_path: str) -> Path:
     saved_frame_count = 0
 
     # output path
-    output_path = Path(video_path).parent / "frames"
+    video_path = Path(video_path)
+    video_id = video_path.stem.split("_")[-1]
+    output_path = Path(video_path).parent / f"frames_{video_id}"
     if not os.path.exists(output_path):
         os.makedirs(output_path)
 
@@ -24,7 +26,7 @@ def extract_frames(video_path: str) -> Path:
         if not ret:
             break
         if frame_number % frame_skip == 0:
-            frame_filename = output_path, f"frame_{saved_frame_count}.jpg"
+            frame_filename = output_path / f"frame_{saved_frame_count}.jpg"
             try:
                 cv2.imwrite(frame_filename, frame)
                 saved_frame_count += 1

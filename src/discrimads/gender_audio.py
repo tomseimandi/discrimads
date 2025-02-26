@@ -155,7 +155,7 @@ def get_gender(
     return preds
 
 
-def get_gender_for_audio(path: str, device: str) -> AudioGender:
+def get_gender_for_audio(path: str, device: str) -> int:
     """Extract gender from audio file stored at given path."""
     model_name_or_path = (
         "alefiury/wav2vec2-large-xlsr-53-gender-recognition-librispeech"

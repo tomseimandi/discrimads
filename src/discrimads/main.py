@@ -12,7 +12,7 @@ from discrimads.transcription import WhisperTranscriber
 from discrimads.util import VideoContent
 from discrimads.extract_frames import extract_frames
 from discrimads.ocr import get_text
-from discrimads.classify import predict_gender
+# from discrimads.classify import predict_gender
 from tqdm import tqdm
 
 
@@ -49,7 +49,7 @@ def extract_content_from_urls(urls: str) -> VideoContent:
         # ocr
         text = get_text(frames_dir)
         # classification from frames
-        frames_gender = predict_gender(frames_dir)
+        # frames_gender = predict_gender(frames_dir)
 
         content = VideoContent(
             url=url,
@@ -57,11 +57,15 @@ def extract_content_from_urls(urls: str) -> VideoContent:
             audio_gender=gender,
             audio_jobs=[],  # TODO: implement
             ocr_text=text,
-            frames_gender=frames_gender
+            frames_gender=0  # TODO: implement
         )
         contents.append(content)
 
+    print(contents)
+    print(contents[0])
+    print(contents[0].model_dump())
     df = pd.DataFrame.from_records([content.model_dump() for content in contents])
+    df.to_parquet("data/sample_content.parquet")
     return df
 
 
